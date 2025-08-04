@@ -1,22 +1,18 @@
-// playwright-api-test.spec.js
-import { test, expect, request } from '@playwright/test';
+// tests/playwright-api-test.spec.ts
+import { test, expect } from '@playwright/test';
+import { secrets } from '../config/secrets'; // Adjust path as needed
 
 test('GET /api/users - Fetch list of users with pagination', async ({ request }) => {
-  const response = await request.get('https://reqres.in/api/users', {
+  const response = await request.get(`${secrets.baseUrl}${secrets.endpoints.fetchUsers}`, {
     headers: {
-      'x-api-key': 'reqres-free-v1'
+      'x-api-key': secrets.apiKey
     }
   });
 
-
   expect(response.status()).toBe(200);
 
-
   const data = await response.json();
-
-
   console.log(JSON.stringify(data, null, 2));
-
 
   expect(data).toHaveProperty('page');
   expect(data).toHaveProperty('data');
