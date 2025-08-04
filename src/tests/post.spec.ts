@@ -7,7 +7,7 @@ test('Simulate adding user to existing user list', async ({ request }) => {
   // 1. GET existing users
   const getResponse = await request.get(`${secrets.baseUrl}${secrets.endpoints.getUsers}`, {
     headers: {
-      'x-api-key': secrets.apiKey           //in progress
+      'x-api-key': secrets.apiKey           //in progress (Will do that)
     }
   });
   expect(getResponse.status()).toBe(200);
@@ -18,7 +18,7 @@ test('Simulate adding user to existing user list', async ({ request }) => {
   // 2. POST new user
   const newUser = {
     name: 'John Doe',
-    job: 'Developer'                // in progress 
+    job: 'Developer'                // in progress (Will do that + Math.fllor)
   };
 
   const postResponse = await request.post(`${secrets.baseUrl}${secrets.endpoints.addUser}`, {
