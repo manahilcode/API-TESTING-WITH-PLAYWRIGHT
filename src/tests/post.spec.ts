@@ -6,24 +6,18 @@ test('Simulate adding user to existing user list', async ({ request }) => {
 
   // 1. GET existing users
   const getResponse = await request.get(`${secrets.baseUrl}${secrets.endpoints.getUsers}`, {
-    headers: {
-      'x-api-key': secrets.apiKey           //in progress (Will do that)
-    }
+  headers: secrets.headers
+
   });
   expect(getResponse.status()).toBe(200);
 
   const usersList = await getResponse.json();
   console.log('👥 Existing users:', usersList.data.length);
 
-  // 2. POST new user
-  const newUser = {
-    name: 'John Doe',
-    job: 'Developer'                // in progress (Will do that + Math.fllor)
-  };
-
+  // 2. POST new user from secrets
   const postResponse = await request.post(`${secrets.baseUrl}${secrets.endpoints.addUser}`, {
     headers: secrets.headers,
-    data: newUser
+    data: secrets.newUserData
   });
 
   expect(postResponse.status()).toBe(201);
@@ -31,11 +25,10 @@ test('Simulate adding user to existing user list', async ({ request }) => {
   const createdUser = await postResponse.json();
   console.log('✅ New user created:', createdUser);
 
-  // 3. Re-fetch users (simulating confirmation step)
+  // 3. Re-fetch users
   const getResponseAfter = await request.get(`${secrets.baseUrl}${secrets.endpoints.getUsers}`, {
-    headers: {
-      'x-api-key': secrets.apiKey
-    }
+    headers: secrets.headers
+
   });
   expect(getResponseAfter.status()).toBe(200);
 
